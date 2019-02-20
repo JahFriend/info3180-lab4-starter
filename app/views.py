@@ -46,9 +46,10 @@ def upload():
         flash('File Saved', 'success')
         return redirect(url_for('home'))
 
-    return render_template('upload.html', form= photoform)
+    return render_template('upload.html', form = photoform)
 
 
+@app.route
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     error = None
@@ -61,6 +62,24 @@ def login():
             flash('You were logged in', 'success')
             return redirect(url_for('upload'))
     return render_template('login.html', error=error)
+
+def get_uploaded_images():
+    rootdir= os.getcwd()
+    filenames=[]
+    #imagefiles = os.listdir('/app/static/uploads')
+    for subdir, dirs, files in os.walk(rootdir + '/app/static/uploads'):
+	    for file in files:
+             filenames.append(os.path.join(subdir, file).split('/')[-1])
+    return filenames
+
+
+            
+	       
+
+@app.route('/files')
+def files():
+    images= get_uploaded_images()
+    return render_template('files.html',images=images)
 
 
 @app.route('/logout')

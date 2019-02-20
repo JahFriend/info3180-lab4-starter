@@ -1,0 +1,14 @@
+{% extends "base.html" %} 
+
+{% block main %}
+
+<link rel="stylesheet" href="app/static/css/app.css">
+<div class = "flex-container">
+    {% for image in images: %}
+    <div> <img src = "{{ url_for('static',filename= "uploads/" + image ) }}" height="500",width="500">  </img> </div>
+    <br>
+    {% endfor%}
+
+</div>
+
+{% endblock main %}
